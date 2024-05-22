@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:timeit_1/widgets/customtext.dart';
 import 'package:timeit_1/widgets/progressbar.dart';
-import 'package:timeit_1/widgets/rect.dart';
+import 'package:timeit_1/widgets/rectangle.dart';
 
 class AudioLIst extends StatefulWidget {
   const AudioLIst({super.key});
