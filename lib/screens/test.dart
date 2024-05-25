@@ -3,27 +3,22 @@ import 'package:timeit_1/widgets/customtext.dart';
 import 'package:timeit_1/widgets/progressbar.dart';
 import 'package:timeit_1/widgets/rectangle.dart';
 
-class AudioLIst extends StatefulWidget {
-  const AudioLIst({super.key});
+class ProgresBarTest extends StatefulWidget {
+  const ProgresBarTest({super.key});
 
   @override
-  State<AudioLIst> createState() => _AudioLIstState();
+  State<ProgresBarTest> createState() => _ProgresBarTestState();
 }
 
-class _AudioLIstState extends State<AudioLIst> {
-  final Duration total = const Duration(seconds: 10);
-  final Duration progress = const Duration(seconds: 5);
-  final Duration buffered = const Duration(seconds: 7);
+class _ProgresBarTestState extends State<ProgresBarTest> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: const CustomText(
-              label: 'Audio List',
+              label: "label",
               lcolor: Colors.black,
-              fontweight: FontWeight.w700,
-              lfontsize: 35.0),
-          centerTitle: true,
+              fontweight: FontWeight.bold),
         ),
         body: ListView.builder(
           itemBuilder: (BuildContext context, int index) {
@@ -37,8 +32,10 @@ class _AudioLIstState extends State<AudioLIst> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.play_arrow_rounded)),
+                          onPressed: () {},
+                          icon: const Icon(Icons.play_arrow_rounded),
+                          iconSize: 40.0,
+                        ),
                         const Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,6 +44,7 @@ class _AudioLIstState extends State<AudioLIst> {
                               CustomText(
                                   label: 'time of recording',
                                   lcolor: Colors.black,
+                                  lfontsize: 20.0,
                                   fontweight: FontWeight.bold),
                               AudioPlayerProgressBar(
                                   total: Duration(minutes: 2),
@@ -62,7 +60,7 @@ class _AudioLIstState extends State<AudioLIst> {
               ),
             );
           },
-          itemCount: 3,
+          itemCount: 15,
         ));
   }
 }
