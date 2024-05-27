@@ -11,9 +11,6 @@ class AudioLIst extends StatefulWidget {
 }
 
 class _AudioLIstState extends State<AudioLIst> {
-  final Duration total = const Duration(seconds: 10);
-  final Duration progress = const Duration(seconds: 5);
-  final Duration buffered = const Duration(seconds: 7);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +35,7 @@ class _AudioLIstState extends State<AudioLIst> {
                       children: [
                         IconButton(
                             onPressed: () {},
+                            iconSize: 40,
                             icon: const Icon(Icons.play_arrow_rounded)),
                         const Expanded(
                           child: Column(
@@ -46,6 +44,7 @@ class _AudioLIstState extends State<AudioLIst> {
                             children: [
                               CustomText(
                                   label: 'time of recording',
+                                  lfontsize: 20.0,
                                   lcolor: Colors.black,
                                   fontweight: FontWeight.bold),
                               AudioPlayerProgressBar(

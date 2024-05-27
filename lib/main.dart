@@ -5,7 +5,7 @@ import 'package:timeit_1/routes/routes.dart';
 void main() {
   // ignore: prefer_const_constructors
   runApp(GetMaterialApp(
-    initialRoute: '/progresbartest',
+    initialRoute: '/timerpage',
     getPages: Routes.routes,
     debugShowCheckedModeBanner: false,
   ));

@@ -1,66 +1,65 @@
-import 'package:flutter/material.dart';
-import 'package:timeit_1/widgets/customtext.dart';
-import 'package:timeit_1/widgets/progressbar.dart';
-import 'package:timeit_1/widgets/rectangle.dart';
+import 'dart:async';
 
-class ProgresBarTest extends StatefulWidget {
-  const ProgresBarTest({super.key});
+import 'package:flutter/material.dart';
+
+class TimerPage extends StatefulWidget {
+  const TimerPage({super.key});
 
   @override
-  State<ProgresBarTest> createState() => _ProgresBarTestState();
+  _TimerPageState createState() => _TimerPageState();
 }
 
-class _ProgresBarTestState extends State<ProgresBarTest> {
+class _TimerPageState extends State<TimerPage> {
+  int _elapsedTimeInSeconds = 0;
+  bool _isRunning = false;
+
+  void _startTimer() {
+    setState(() {
+      _isRunning = true;
+    });
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_isRunning) {
+        setState(() {
+          _elapsedTimeInSeconds++;
+        });
+      } else {
+        timer.cancel();
+      }
+    });
+  }
+
+  void _stopTimer() {
+    setState(() {
+      _isRunning = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const CustomText(
-              label: "label",
-              lcolor: Colors.black,
-              fontweight: FontWeight.bold),
+      appBar: AppBar(
+        title: const Text('Flutter Timer'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Elapsed Time:',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            Text(
+              '$_elapsedTimeInSeconds seconds',
+              style: Theme.of(context).textTheme.displayLarge,
+            ),
+          ],
         ),
-        body: ListView.builder(
-          itemBuilder: (BuildContext context, int index) {
-            return Square(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.play_arrow_rounded),
-                          iconSize: 40.0,
-                        ),
-                        const Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              CustomText(
-                                  label: 'time of recording',
-                                  lcolor: Colors.black,
-                                  lfontsize: 20.0,
-                                  fontweight: FontWeight.bold),
-                              AudioPlayerProgressBar(
-                                  total: Duration(minutes: 2),
-                                  progress: Duration(minutes: 1),
-                                  buffered: Duration(seconds: 90))
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            );
-          },
-          itemCount: 15,
-        ));
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _isRunning ? _stopTimer : _startTimer,
+        tooltip: 'Start/Pause',
+        child: Icon(_isRunning ? Icons.pause : Icons.play_arrow),
+      ),
+    );
   }
 }
