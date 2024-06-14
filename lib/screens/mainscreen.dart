@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
@@ -18,9 +19,29 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int clock = 0;
-  bool isrunning = false;
+  bool isRunning = false;
 
-  void startT
+  void startTimer() {
+    setState(() {
+      isRunning = true;
+    });
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (isRunning) {
+        setState(() {
+          clock++;
+        });
+      } else {
+        timer.cancel();
+      }
+    });
+  }
+
+  void stopTimer() {
+    setState(() {
+      isRunning = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,17 +57,28 @@ class _MainScreenState extends State<MainScreen> {
               ),
               centerTitle: true,
             )),
-        body:  Center(
+        body: Center(
           child: Column(
-            children: [
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
               CustomText(
-                label: '${clock} seconds', 
-                lcolor: Colors.black, 
-                fontweight: FontWeight.w600),
+                  label: '${clock} seconds',
+                  lcolor: Colors.black,
+                  lfontsize: 80.0,
+                  fontweight: FontWeight.w600),
               CustomButton(
-                action: isrunning?startre,
+                action: () {
+                  setState(() {
+                    isRunning = !isRunning;
+                  });
+                  if (isRunning) {
+                    startRecording();
+                  } else {
+                    stopRecording();
+                  }
+                },
                 buttoncolor: Colors.black,
-                icon: Icon(Icons.mic),
+                icon: Icon(isRunning ? Icons.pause : Icons.mic),
                 iconcolor: Colors.white,
               ),
             ],
@@ -54,9 +86,13 @@ class _MainScreenState extends State<MainScreen> {
         ));
   }
 
-  Future<void> startRecording() async {}
+  Future<void> startRecording() async {
+    startTimer();
+  }
 
-  Future<void> stopRecording() async {}
+  Future<void> stopRecording() async {
+    stopTimer();
+  }
 
   Future<void> requestPermission() async {
     var status = await Permission.microphone.request();
