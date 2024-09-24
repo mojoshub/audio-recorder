@@ -39,6 +39,7 @@ class _MainScreenState extends State<MainScreen> {
   void stopTimer() {
     setState(() {
       isRunning = false;
+      int clock = 0;
     });
   }
 
@@ -48,7 +49,7 @@ class _MainScreenState extends State<MainScreen> {
         appBar: PreferredSize(
             preferredSize: const Size.fromHeight(60.0),
             child: AppBar(
-              backgroundColor: Colors.black,
+              backgroundColor: const Color.fromARGB(255, 217, 174, 174),
               title: const CustomText(
                 label: 'RECORD AUDIO',
                 lcolor: Colors.white,
@@ -62,7 +63,7 @@ class _MainScreenState extends State<MainScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               CustomText(
-                  label: '${clock} seconds',
+                  label: '$clock seconds',
                   lcolor: Colors.black,
                   lfontsize: 80.0,
                   fontweight: FontWeight.w600),
@@ -72,7 +73,7 @@ class _MainScreenState extends State<MainScreen> {
                     isRunning = !isRunning;
                   });
                   if (isRunning) {
-                    startRecording();
+                    requestPermission();
                   } else {
                     stopRecording();
                   }
@@ -96,7 +97,11 @@ class _MainScreenState extends State<MainScreen> {
 
   Future<void> requestPermission() async {
     var status = await Permission.microphone.request();
-    if (status.isGranted) {}
+    if (status.isGranted) {
+      startRecording();
+    } else {
+      print('enable permission.');
+    }
   }
 
   Future<String> saveAudioFile() async {

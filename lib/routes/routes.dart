@@ -7,6 +7,6 @@ class Routes {
   static var routes = [
     GetPage(name: '/', page: () => const MainScreen()),
     GetPage(name: '/audiolist', page: () => const AudioLIst()),
-    GetPage(name: '/timerpage', page: () => TimerPage()),
+    GetPage(name: '/timerpage', page: () => const TimerPage()),
   ];
 }
